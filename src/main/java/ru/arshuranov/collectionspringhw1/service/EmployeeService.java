@@ -4,8 +4,7 @@ public interface EmployeeService {
 
     String show();
 
-    void addEmployee(Employee employee);
+    void addEmployee(String firstName, String lastName);
+    String findEmployee (String firstName, String lastName);
     void removeEmployee (String firstName, String lastName);
-    void findEmployee (String firstName, String lastName);
-
 }
