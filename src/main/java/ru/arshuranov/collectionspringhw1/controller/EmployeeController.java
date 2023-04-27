@@ -11,13 +11,14 @@ import ru.arshuranov.collectionspringhw1.service.EmployeeService;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
+
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping(path = "/employee")
     public String greeting() {
-        return "Hello";
+        return "Hello hello";
     }
 
     @GetMapping(path = "/employee/add")
