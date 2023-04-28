@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.arshuranov.collectionspringhw1.exception.EmployeeAlreadyAddedException;
 import ru.arshuranov.collectionspringhw1.exception.EmployeeNotFoundException;
-import ru.arshuranov.collectionspringhw1.service.Employee;
 import ru.arshuranov.collectionspringhw1.service.EmployeeService;
 
 
@@ -21,16 +21,17 @@ public class EmployeeController {
 
     @GetMapping
     public String greeting() {
-        return "Hello";
+        return employeeService.show();
     }
 
     @GetMapping(path = "/add")
     public String addEmployee(@RequestParam(value = "firstName") String firstName,
                               @RequestParam(value = "lastName") String lastName) {
-
-        employeeService.addEmployee(firstName, lastName);
-
-        return "Сотрудник успешно добавлен! \n" + employeeService.show();
+        try {
+            return "Сотрудник добавлен: " +  employeeService.addEmployee(firstName, lastName);
+        } catch (EmployeeAlreadyAddedException e) {
+            return "EmployeeAlreadyAdded";
+        }
     }
 
     @GetMapping("/find")
@@ -47,10 +48,11 @@ public class EmployeeController {
     @GetMapping("/remove")
     public String removeEmployee(@RequestParam("firstName") String firstName,
                                  @RequestParam("lastName") String lastName) {
-
-        employeeService.removeEmployee(firstName, lastName);
-
-        return "Сотрудник удален" + employeeService.show();
+        try {
+            return "Сотрудник удален: " + employeeService.removeEmployee(firstName, lastName);
+        } catch (EmployeeNotFoundException e) {
+            return "EmployeeNotFound";
+        }
     }
 
 
